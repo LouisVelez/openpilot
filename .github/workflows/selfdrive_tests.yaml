@@ -108,6 +108,13 @@ jobs:
       with:
         submodules: true
     - run: git lfs pull
+    - name: Cache Homebrew downloads
+      uses: actions/cache@v4
+      with:
+        path: ~/Library/Caches/Homebrew/downloads
+        key: ${{ runner.os }}-brew-downloads-${{ hashFiles('tools/mac_setup.sh') }}
+        restore-keys: |
+          ${{ runner.os }}-brew-downloads-
     - name: Install dependencies
       run: ./tools/mac_setup.sh
       env:
